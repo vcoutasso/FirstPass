@@ -392,11 +392,11 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_ENTITLEMENTS = FirstPass/FirstPass.entitlements;
+				CODE_SIGN_ENTITLEMENTS = "FirstPass/Supporting-Files/FirstPass.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_ASSET_PATHS = "\"FirstPass/Preview Content\"";
+				DEVELOPMENT_ASSET_PATHS = "\"FirstPass/Resources/Preview Content\"";
 				DEVELOPMENT_TEAM = H7BM7N56V5;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
@@ -406,6 +406,7 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
+				MACOSX_DEPLOYMENT_TARGET = 14.6;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.vcoutasso.FirstPass;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -419,11 +420,11 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_ENTITLEMENTS = FirstPass/FirstPass.entitlements;
+				CODE_SIGN_ENTITLEMENTS = "FirstPass/Supporting-Files/FirstPass.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_ASSET_PATHS = "\"FirstPass/Preview Content\"";
+				DEVELOPMENT_ASSET_PATHS = "\"FirstPass/Resources/Preview Content\"";
 				DEVELOPMENT_TEAM = H7BM7N56V5;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
@@ -433,6 +434,7 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
+				MACOSX_DEPLOYMENT_TARGET = 14.6;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.vcoutasso.FirstPass;
 				PRODUCT_NAME = "$(TARGET_NAME)";
