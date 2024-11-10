@@ -13,7 +13,7 @@ struct FirstPassView: View {
     // MARK: Body
 
     var body: some View {
-        CredentialGridView(credentials: .constant(viewModel.filteredCredentials), deleteCredentialCallback: viewModel.removeCredential)
+        CredentialGridView(credentials: .constant(viewModel.filteredCredentials), deleteCredentialCallback: viewModel.removeCredential, updateCredentialCallback: viewModel.updateCredential)
             .searchable(text: $viewModel.searchQuery, prompt: Text("Credential name"))
             .toolbar {
                 ToolbarItem(placement: .primaryAction) {

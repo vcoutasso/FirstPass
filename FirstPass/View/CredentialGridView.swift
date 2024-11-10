@@ -6,6 +6,7 @@ struct CredentialGridView: View {
 
     @Binding var credentials: [Credential]
     private(set) var deleteCredentialCallback: (Credential) -> Void
+    private(set) var updateCredentialCallback: (Credential) -> Void
 
     // MARK: Body
 
@@ -20,10 +21,16 @@ struct CredentialGridView: View {
                     Spacer()
                 } else {
                     LazyVGrid(columns: columns, alignment: .leading, spacing: 20) {
-                        ForEach(credentials.sorted(by: { $0.name < $1.name }), id: \.id) { credential in
+                        ForEach(credentials.sorted(by: { $0.name < $1.name }), id: \.self) { credential in
                             CredentialCardView(credential: credential, onDelete: {
                                 deleteCredentialCallback(credential)
                             })
+                            .onTapGesture {
+                                isPresentingUpdateView = true
+                            }
+                            .sheet(isPresented: $isPresentingUpdateView) {
+                                CredentialEditView(credential: credential, onSave: updateCredentialCallback)
+                            }
                         }
                     }
                 }
@@ -34,7 +41,9 @@ struct CredentialGridView: View {
         }
     }
 
-    // MARK: Properties
+    // MARK: Private properties
+
+    @State private var isPresentingUpdateView: Bool = false
 
     private let columns = [
         GridItem(.flexible()),
@@ -66,11 +75,11 @@ private extension CredentialGridView {
         .init(name: "My Password", urlString: "someurl.com", username: "Username", password: "secret-password")
     ]
 
-    CredentialGridView(credentials: $credentials, deleteCredentialCallback: { _ in })
+    CredentialGridView(credentials: $credentials, deleteCredentialCallback: { _ in }, updateCredentialCallback: { _ in })
 }
 
 #Preview("Empty Credentials") {
     @Previewable @State var credentials = [Credential]()
     
-    CredentialGridView(credentials: $credentials, deleteCredentialCallback: { _ in })
+    CredentialGridView(credentials: $credentials, deleteCredentialCallback: { _ in }, updateCredentialCallback: { _ in })
 }

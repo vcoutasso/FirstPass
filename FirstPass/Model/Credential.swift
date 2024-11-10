@@ -2,7 +2,7 @@ import Foundation
 
 // MARK: - Credential
 
-struct Credential: Identifiable {
+struct Credential: Identifiable, Hashable {
     let id: UUID = .init()
     var name: String
     var urlString: String
@@ -15,13 +15,5 @@ struct Credential: Identifiable {
 
     func isValid() -> Bool {
         !name.isEmpty && !urlString.isEmpty && !username.isEmpty && !password.isEmpty
-    }
-}
-
-// MARK: Hashable
-
-extension Credential: Hashable {
-    func hash(into hasher: inout Hasher) {
-        hasher.combine(id)
     }
 }
