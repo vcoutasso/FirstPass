@@ -4,12 +4,12 @@ import SwiftUI
 
 struct CredentialEditView: View {
 
-    // MARK: View state
+    // MARK: Internal
 
     @State var credential: Credential
     @Environment(\.dismiss) private var dismiss
 
-    var onSave: ((Credential) -> Void)
+    private(set) var onSave: ((Credential) -> Void)
 
     // MARK: Body
 

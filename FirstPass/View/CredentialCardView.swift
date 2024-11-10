@@ -4,15 +4,9 @@ import SwiftUI
 
 struct CredentialCardView: View {
 
-    // MARK: View state
+    // MARK: Internal
 
     @State var credential: Credential
-
-    @State private var isPasswordHidden: Bool = true
-    @State private var disableDeleteButton: Bool = true
-
-    // MARK: Properties
-
     private(set) var onDelete: () -> Void
 
     // MARK: Body
@@ -46,6 +40,11 @@ struct CredentialCardView: View {
             disableDeleteButton = !withinBounds
         }
     }
+
+    // MARK: Private 
+
+    @State private var isPasswordHidden: Bool = true
+    @State private var disableDeleteButton: Bool = true
 }
 
 // MARK: - Helper Views

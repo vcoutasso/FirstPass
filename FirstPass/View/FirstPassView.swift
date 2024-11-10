@@ -31,10 +31,9 @@ struct FirstPassView: View {
             }
     }
 
-    // MARK: Private properties
+    // MARK: Private 
 
     @StateObject private var viewModel: FirstPassViewModel
-
     @State private var isPresentingEditView: Bool = false
 }
 

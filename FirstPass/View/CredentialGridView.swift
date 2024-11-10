@@ -4,6 +4,8 @@ import SwiftUI
 
 struct CredentialGridView: View {
 
+    // MARK: Internal
+
     @Binding var credentials: [Credential]
     private(set) var deleteCredentialCallback: (Credential) -> Void
     private(set) var updateCredentialCallback: (Credential) -> Void
@@ -41,7 +43,7 @@ struct CredentialGridView: View {
         }
     }
 
-    // MARK: Private properties
+    // MARK: Private
 
     @State private var isPresentingUpdateView: Bool = false
 
