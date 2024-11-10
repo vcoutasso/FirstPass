@@ -14,7 +14,7 @@ final class FirstPassViewModel: ObservableObject {
 
     @Published var credentials: Set<Credential>
 
-    func updateCredential(_ credential: Credential){
+    func updateCredential(_ credential: Credential) {
         credentials.update(with: credential)
     }
 }

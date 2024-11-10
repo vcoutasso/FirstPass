@@ -15,13 +15,13 @@ struct CredentialEditView: View {
 
     var body: some View {
         Form {
-            inputField(label: "Name:" ,text: $credential.name)
+            inputField(label: "Name:", text: $credential.name)
 
             inputField(label: "Username:", text: $credential.username, contentType: .username)
 
             inputField(label: "Password:", text: $credential.password, contentType: .password)
 
-            inputField(label: "URL:",text: $credential.urlString, contentType: .URL)
+            inputField(label: "URL:", text: $credential.urlString, contentType: .URL)
 
             HStack(spacing: 20) {
                 Spacer()
