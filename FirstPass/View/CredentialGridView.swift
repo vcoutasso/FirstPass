@@ -23,7 +23,7 @@ struct CredentialGridView: View {
                     Spacer()
                 } else {
                     LazyVGrid(columns: columns, alignment: .leading, spacing: 20) {
-                        ForEach(credentials.sorted(by: { $0.name < $1.name }), id: \.self) { credential in
+                        ForEach(credentials.sorted(by: { $0.name.localizedCaseInsensitiveCompare($1.name) == .orderedAscending }), id: \.self) { credential in
                             CredentialCardView(credential: credential, onDelete: {
                                 withAnimation(.spring(bounce: 0.3)) {
                                     deleteCredentialCallback(credential)
