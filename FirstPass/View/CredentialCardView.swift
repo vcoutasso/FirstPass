@@ -6,6 +6,8 @@ struct CredentialCardView: View {
 
     // MARK: View state
 
+    @State var credential: Credential
+
     @State private var isPasswordHidden: Bool = true
 
     // MARK: Body
@@ -55,10 +57,6 @@ struct CredentialCardView: View {
         .frame(minWidth: 80, maxWidth: 240, minHeight: 60)
         .padding()
     }
-
-    // MARK: Private properties
-
-    let credential: Credential
 }
 
 // MARK: - Helper Views

@@ -6,7 +6,7 @@ struct CredentialGridView: View {
 
     // MARK: View state
 
-    @State var credentials: [Credential]
+    @Binding private(set) var credentials: Set<Credential>
 
     // MARK: Body
 
@@ -15,8 +15,8 @@ struct CredentialGridView: View {
             if credentials.isEmpty {
                 emptyCredentialsView
             } else {
-                LazyVGrid(columns: columns, spacing: 20) {
-                    ForEach(credentials, id: \.id) {
+                LazyVGrid(columns: columns, alignment: .leading, spacing: 20) {
+                    ForEach(credentials.sorted(by: { $0.name < $1.name }), id: \.id) {
                         CredentialCardView(credential: $0)
                     }
                 }
@@ -52,9 +52,14 @@ private extension CredentialGridView {
 // MARK: - SwiftUI Previews
 
 #Preview("With Credentials") {
-    CredentialGridView(credentials: [.init(name: "My Password", url: .init(string: "someurl.com")!, username: "Username", password: "secret-password")])
+    @Previewable @State var credentials: Set<Credential> = Set([
+        .init(name: "My Password", url: URL(string: "someurl.com")!, username: "Username", password: "secret-password")
+    ])
+
+    CredentialGridView(credentials: $credentials)
 }
 
 #Preview("Empty Credentials") {
-    CredentialGridView(credentials: [])
+    @Previewable @State var credentials: Set<Credential> = .init()
+    CredentialGridView(credentials: $credentials)
 }

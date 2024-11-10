@@ -4,18 +4,34 @@ import SwiftUI
 
 struct FirstPassView: View {
 
-    // MARK: View state
+    // MARK: Lifecycle
 
-    @State var credentials: [Credential]
+    init(viewModel: FirstPassViewModel = .init()) {
+        self._viewModel = StateObject(wrappedValue: viewModel)
+    }
+
+    // MARK: Body
 
     var body: some View {
-        CredentialGridView(credentials: credentials)
+        CredentialGridView(credentials: $viewModel.credentials)
     }
+
+    // MARK: Private properties
+
+    @StateObject private var viewModel: FirstPassViewModel
+
 }
 
 // MARK: - SwiftUI Previews
 
 #Preview {
-    FirstPassView(credentials: .init(repeating: .mock(), count: 10))
+    let credentials: [Credential] = {
+        var array = [Credential]()
+        for _ in 1...10 { array.append(.mock()) }
+        return array
+    }()
+    let vm = FirstPassViewModel(credentials: Set(credentials))
+
+    FirstPassView(viewModel: vm)
         .frame(width: 800, height: 640)
 }
