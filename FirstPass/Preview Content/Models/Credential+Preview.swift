@@ -1,7 +1,5 @@
 import Foundation
 
-#if DEBUG
-
 extension Credential {
     static func mock() -> Credential {
         .init(
@@ -12,5 +10,3 @@ extension Credential {
         )
     }
 }
-
-#endif

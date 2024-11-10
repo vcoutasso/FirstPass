@@ -1,7 +1,5 @@
 import Foundation
 
-#if DEBUG
-
 extension VolatileCredentialProvider {
     convenience init(credentials: [Credential]) {
         self.init()
@@ -10,5 +8,3 @@ extension VolatileCredentialProvider {
         }
     }
 }
-
-#endif

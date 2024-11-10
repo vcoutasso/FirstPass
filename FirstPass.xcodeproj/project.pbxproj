@@ -33,7 +33,7 @@
 		4CC4B5292CE0FDE1006B1604 /* Exceptions for "FirstPass" folder in "FirstPass" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
-				"Model/Preview/VolatileCredentialProvider+Preview.swift",
+				"Preview Content/Models/VolatileCredentialProvider+Preview.swift",
 			);
 			target = 4C6451F22CDEF8330032114B /* FirstPass */;
 		};
@@ -410,7 +410,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_ASSET_PATHS = "FirstPass/Resources/Preview\\ Content";
+				DEVELOPMENT_ASSET_PATHS = "FirstPass/Preview\\ Content";
 				DEVELOPMENT_TEAM = H7BM7N56V5;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
@@ -442,7 +442,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_ASSET_PATHS = "FirstPass/Resources/Preview\\ Content";
+				DEVELOPMENT_ASSET_PATHS = "FirstPass/Preview\\ Content";
 				DEVELOPMENT_TEAM = H7BM7N56V5;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
