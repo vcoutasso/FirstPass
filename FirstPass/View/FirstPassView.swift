@@ -4,6 +4,8 @@ import SwiftUI
 
 struct FirstPassView: View {
 
+    @State var isPresentingEditView: Bool = false
+
     // MARK: Lifecycle
 
     init(viewModel: FirstPassViewModel = .init()) {
@@ -14,6 +16,20 @@ struct FirstPassView: View {
 
     var body: some View {
         CredentialGridView(credentials: $viewModel.credentials)
+            .toolbar {
+                ToolbarItem(placement: .primaryAction) {
+                    Button {
+                        isPresentingEditView = true
+                    } label: {
+                        Image(systemName: "plus")
+                    }
+                }
+            }
+            .sheet(isPresented: $isPresentingEditView) {
+                CredentialEditView(credential: Credential.emptyCredential()) { credential in
+                    viewModel.updateCredential(credential)
+                }
+            }
     }
 
     // MARK: Private properties

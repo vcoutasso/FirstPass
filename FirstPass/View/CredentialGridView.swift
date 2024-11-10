@@ -53,7 +53,7 @@ private extension CredentialGridView {
 
 #Preview("With Credentials") {
     @Previewable @State var credentials: Set<Credential> = Set([
-        .init(name: "My Password", url: URL(string: "someurl.com")!, username: "Username", password: "secret-password")
+        .init(name: "My Password", urlString: "someurl.com", username: "Username", password: "secret-password")
     ])
 
     CredentialGridView(credentials: $credentials)

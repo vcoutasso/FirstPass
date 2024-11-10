@@ -4,10 +4,18 @@ import Foundation
 
 struct Credential: Identifiable {
     let id: UUID = .init()
-    let name: String
-    let url: URL
-    let username: String
-    let password: String
+    var name: String
+    var urlString: String
+    var username: String
+    var password: String
+
+    static func emptyCredential() -> Credential {
+        .init(name: "", urlString: "", username: "", password: "")
+    }
+
+    func isValid() -> Bool {
+        !name.isEmpty && !urlString.isEmpty && !username.isEmpty && !password.isEmpty
+    }
 }
 
 // MARK: Hashable

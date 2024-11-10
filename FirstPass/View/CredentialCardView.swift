@@ -19,7 +19,7 @@ struct CredentialCardView: View {
                 .bold()
                 .foregroundStyle(.primary)
 
-            Text(credential.url.absoluteString)
+            Text(credential.urlString)
                 .font(.subheadline)
                 .foregroundStyle(.secondary)
 
