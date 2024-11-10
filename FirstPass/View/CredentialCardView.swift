@@ -9,10 +9,49 @@ struct CredentialCardView: View {
     @State var credential: Credential
 
     @State private var isPasswordHidden: Bool = true
+    @State private var disableDeleteButton: Bool = true
+
+    // MARK: Properties
+
+    private(set) var onDelete: () -> Void
 
     // MARK: Body
 
     var body: some View {
+        ZStack(alignment: .topTrailing) {
+
+            Button {
+                onDelete()
+            } label: {
+                Image(systemName: "x.circle.fill")
+                    .padding(6)
+            }
+            .padding()
+            .zIndex(1)
+            .disabled(disableDeleteButton)
+            .opacity(disableDeleteButton ? 0 : 1)
+            .buttonStyle(.plain)
+
+            cardContentView
+                .lineLimit(1)
+                .padding()
+                .background(
+                    RoundedRectangle(cornerRadius: 12)
+                        .fill(.background)
+                )
+                .frame(minWidth: 80, maxWidth: 240, minHeight: 60)
+                .padding()
+        }
+        .onHover { withinBounds in
+            disableDeleteButton = !withinBounds
+        }
+    }
+}
+
+// MARK: - Helper Views
+
+private extension CredentialCardView {
+    private var cardContentView: some View {
         VStack(alignment: .leading, spacing: 8) {
             Text(credential.name)
                 .font(.headline)
@@ -30,13 +69,13 @@ struct CredentialCardView: View {
 
                 Spacer()
 
-                    if isPasswordHidden {
-                        obscuredPasswordView
-                            .textSelection(.disabled)
-                    } else {
-                        Text(credential.password)
-                            .font(.subheadline)
-                    }
+                if isPasswordHidden {
+                    obscuredPasswordView
+                        .textSelection(.disabled)
+                } else {
+                    Text(credential.password)
+                        .font(.subheadline)
+                }
 
                 Button(action: {
                     isPasswordHidden.toggle()
@@ -48,20 +87,8 @@ struct CredentialCardView: View {
             }
             .textSelection(.enabled)
         }
-        .lineLimit(1)
-        .padding()
-        .background(
-            RoundedRectangle(cornerRadius: 12)
-                .fill(.background)
-        )
-        .frame(minWidth: 80, maxWidth: 240, minHeight: 60)
-        .padding()
     }
-}
 
-// MARK: - Helper Views
-
-private extension CredentialCardView {
     private var obscuredPasswordView: some View {
         Text("********")
             .font(.subheadline)
@@ -71,5 +98,5 @@ private extension CredentialCardView {
 // MARK: - SwiftUI Previews
 
 #Preview {
-    CredentialCardView(credential: .mock())
+    CredentialCardView(credential: .mock(), onDelete: { })
 }

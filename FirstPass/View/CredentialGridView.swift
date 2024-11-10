@@ -21,8 +21,10 @@ struct CredentialGridView: View {
                     Spacer()
                 } else {
                     LazyVGrid(columns: columns, alignment: .leading, spacing: 20) {
-                        ForEach(credentials.sorted(by: { $0.name < $1.name }), id: \.id) {
-                            CredentialCardView(credential: $0)
+                        ForEach(credentials.sorted(by: { $0.name < $1.name }), id: \.id) { credential in
+                            CredentialCardView(credential: credential, onDelete: {
+                                credentials.remove(credential)
+                            })
                         }
                     }
                 }
