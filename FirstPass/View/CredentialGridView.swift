@@ -4,9 +4,8 @@ import SwiftUI
 
 struct CredentialGridView: View {
 
-    // MARK: View state
-
-    @Binding private(set) var credentials: Set<Credential>
+    @Binding var credentials: [Credential]
+    private(set) var deleteCredentialCallback: (Credential) -> Void
 
     // MARK: Body
 
@@ -23,7 +22,7 @@ struct CredentialGridView: View {
                     LazyVGrid(columns: columns, alignment: .leading, spacing: 20) {
                         ForEach(credentials.sorted(by: { $0.name < $1.name }), id: \.id) { credential in
                             CredentialCardView(credential: credential, onDelete: {
-                                credentials.remove(credential)
+                                deleteCredentialCallback(credential)
                             })
                         }
                     }
@@ -35,7 +34,7 @@ struct CredentialGridView: View {
         }
     }
 
-    // MARK: Private properties
+    // MARK: Properties
 
     private let columns = [
         GridItem(.flexible()),
@@ -63,14 +62,15 @@ private extension CredentialGridView {
 // MARK: - SwiftUI Previews
 
 #Preview("With Credentials") {
-    @Previewable @State var credentials: Set<Credential> = Set([
+    @Previewable @State var credentials: [Credential] = [
         .init(name: "My Password", urlString: "someurl.com", username: "Username", password: "secret-password")
-    ])
+    ]
 
-    CredentialGridView(credentials: $credentials)
+    CredentialGridView(credentials: $credentials, deleteCredentialCallback: { _ in })
 }
 
 #Preview("Empty Credentials") {
-    @Previewable @State var credentials: Set<Credential> = .init()
-    CredentialGridView(credentials: $credentials)
+    @Previewable @State var credentials = [Credential]()
+    
+    CredentialGridView(credentials: $credentials, deleteCredentialCallback: { _ in })
 }

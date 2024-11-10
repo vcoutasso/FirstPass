@@ -12,9 +12,29 @@ final class FirstPassViewModel: ObservableObject {
 
     // MARK: Internal
 
-    @Published var credentials: Set<Credential>
+    @Published var searchQuery: String = ""
+
+    var filteredCredentials: [Credential] {
+        if searchQuery.isEmpty {
+            Array(credentials)
+        } else {
+            credentials.filter {
+                $0.name.localizedCaseInsensitiveContains(searchQuery)
+            }
+        }
+    }
 
     func updateCredential(_ credential: Credential) {
         credentials.update(with: credential)
+        objectWillChange.send()
     }
+
+    func removeCredential(_ credential: Credential) {
+        credentials.remove(credential)
+        objectWillChange.send()
+    }
+
+    // MARK: Private
+
+    private var credentials: Set<Credential>
 }

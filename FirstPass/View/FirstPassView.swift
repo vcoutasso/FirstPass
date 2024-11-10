@@ -4,8 +4,6 @@ import SwiftUI
 
 struct FirstPassView: View {
 
-    @State var isPresentingEditView: Bool = false
-
     // MARK: Lifecycle
 
     init(viewModel: FirstPassViewModel = .init()) {
@@ -15,7 +13,8 @@ struct FirstPassView: View {
     // MARK: Body
 
     var body: some View {
-        CredentialGridView(credentials: $viewModel.credentials)
+        CredentialGridView(credentials: .constant(viewModel.filteredCredentials), deleteCredentialCallback: viewModel.removeCredential)
+            .searchable(text: $viewModel.searchQuery, prompt: Text("Credential name"))
             .toolbar {
                 ToolbarItem(placement: .primaryAction) {
                     Button {
@@ -26,7 +25,7 @@ struct FirstPassView: View {
                 }
             }
             .sheet(isPresented: $isPresentingEditView) {
-                CredentialEditView(credential: Credential.emptyCredential()) { credential in
+                CredentialEditView(credential: .emptyCredential()) { credential in
                     viewModel.updateCredential(credential)
                 }
             }
@@ -36,6 +35,7 @@ struct FirstPassView: View {
 
     @StateObject private var viewModel: FirstPassViewModel
 
+    @State private var isPresentingEditView: Bool = false
 }
 
 // MARK: - SwiftUI Previews
