@@ -14,7 +14,11 @@ struct CredentialGridView: View {
         VStack(alignment: .leading) {
             Group {
                 if credentials.isEmpty {
+                    Spacer()
+
                     emptyCredentialsView
+
+                    Spacer()
                 } else {
                     LazyVGrid(columns: columns, alignment: .leading, spacing: 20) {
                         ForEach(credentials.sorted(by: { $0.name < $1.name }), id: \.id) {
@@ -49,6 +53,7 @@ private extension CredentialGridView {
             Text("No Credentials")
                 .bold()
         }
+        .fixedSize()
         .frame(alignment: .center)
     }
 }
