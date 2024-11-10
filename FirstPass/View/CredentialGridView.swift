@@ -11,18 +11,22 @@ struct CredentialGridView: View {
     // MARK: Body
 
     var body: some View {
-        Group {
-            if credentials.isEmpty {
-                emptyCredentialsView
-            } else {
-                LazyVGrid(columns: columns, alignment: .leading, spacing: 20) {
-                    ForEach(credentials.sorted(by: { $0.name < $1.name }), id: \.id) {
-                        CredentialCardView(credential: $0)
+        VStack(alignment: .leading) {
+            Group {
+                if credentials.isEmpty {
+                    emptyCredentialsView
+                } else {
+                    LazyVGrid(columns: columns, alignment: .leading, spacing: 20) {
+                        ForEach(credentials.sorted(by: { $0.name < $1.name }), id: \.id) {
+                            CredentialCardView(credential: $0)
+                        }
                     }
                 }
             }
+            .padding()
+
+            Spacer()
         }
-        .padding()
     }
 
     // MARK: Private properties
