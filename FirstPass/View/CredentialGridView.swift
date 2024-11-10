@@ -25,7 +25,9 @@ struct CredentialGridView: View {
                     LazyVGrid(columns: columns, alignment: .leading, spacing: 20) {
                         ForEach(credentials.sorted(by: { $0.name < $1.name }), id: \.self) { credential in
                             CredentialCardView(credential: credential, onDelete: {
-                                deleteCredentialCallback(credential)
+                                withAnimation(.spring(bounce: 0.3)) {
+                                    deleteCredentialCallback(credential)
+                                }
                             })
                             .onTapGesture {
                                 isPresentingUpdateView = true
@@ -74,10 +76,12 @@ private extension CredentialGridView {
 
 #Preview("With Credentials") {
     @Previewable @State var credentials: [Credential] = [
-        .init(name: "My Password", urlString: "someurl.com", username: "Username", password: "secret-password")
+        .init(name: "My Password", urlString: "someurl.com", username: "Username", password: "secret-password"),
+        .init(name: "My Other Password", urlString: "somothereurl.com", username: "Username", password: "secret-password")
     ]
 
-    CredentialGridView(credentials: $credentials, deleteCredentialCallback: { _ in }, updateCredentialCallback: { _ in })
+    CredentialGridView(credentials: $credentials, deleteCredentialCallback: { _ in credentials.removeFirst() }, updateCredentialCallback: { _ in })
+        .frame(width: 640, height: 480)
 }
 
 #Preview("Empty Credentials") {
