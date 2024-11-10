@@ -29,6 +29,7 @@ struct FirstPassView: View {
                     viewModel.updateCredential(credential)
                 }
             }
+            .frame(minWidth: 640, minHeight: 480)
     }
 
     // MARK: Private 

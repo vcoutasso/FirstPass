@@ -22,18 +22,20 @@ struct CredentialGridView: View {
 
                     Spacer()
                 } else {
-                    LazyVGrid(columns: columns, alignment: .leading, spacing: 20) {
-                        ForEach(credentials.sorted(by: { $0.name.localizedCaseInsensitiveCompare($1.name) == .orderedAscending }), id: \.self) { credential in
-                            CredentialCardView(credential: credential, onDelete: {
-                                withAnimation(.spring(bounce: 0.3)) {
-                                    deleteCredentialCallback(credential)
+                    GeometryReader { geometry in
+                        LazyVGrid(columns: gridColumns(width: geometry.size.width), alignment: .leading) {
+                            ForEach(credentials.sorted(by: { $0.name.localizedCaseInsensitiveCompare($1.name) == .orderedAscending }), id: \.self) { credential in
+                                CredentialCardView(credential: credential, onDelete: {
+                                    withAnimation(.spring(bounce: 0.3)) {
+                                        deleteCredentialCallback(credential)
+                                    }
+                                })
+                                .onTapGesture {
+                                    isPresentingUpdateView = true
                                 }
-                            })
-                            .onTapGesture {
-                                isPresentingUpdateView = true
-                            }
-                            .sheet(isPresented: $isPresentingUpdateView) {
-                                CredentialEditView(credential: credential, onSave: updateCredentialCallback)
+                                .sheet(isPresented: $isPresentingUpdateView) {
+                                    CredentialEditView(credential: credential, onSave: updateCredentialCallback)
+                                }
                             }
                         }
                     }
@@ -49,11 +51,11 @@ struct CredentialGridView: View {
 
     @State private var isPresentingUpdateView: Bool = false
 
-    private let columns = [
-        GridItem(.flexible()),
-        GridItem(.flexible()),
-        GridItem(.flexible()),
-    ]
+    private func gridColumns(width: CGFloat) -> [GridItem] {
+        let columns = max(3, Int(width) / Int(CredentialCardView.maxWidth))
+
+        return .init(repeating: .init(.flexible(minimum: CredentialCardView.minWidth, maximum: CredentialCardView.maxWidth)), count: columns)
+    }
 }
 
 // MARK: - Helper Views

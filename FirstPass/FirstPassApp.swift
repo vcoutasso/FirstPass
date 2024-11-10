@@ -11,6 +11,7 @@ struct FirstPassApp: App {
         WindowGroup {
             FirstPassView()
         }
+        .windowResizability(.contentSize)
         .defaultSize(width: 640, height: 480)
     }
 }

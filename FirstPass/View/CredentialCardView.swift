@@ -6,6 +6,9 @@ struct CredentialCardView: View {
 
     // MARK: Internal
 
+    static let minWidth: CGFloat = 100
+    static let maxWidth: CGFloat = 240
+
     @State var credential: Credential
     private(set) var onDelete: () -> Void
 
@@ -20,7 +23,6 @@ struct CredentialCardView: View {
                 Image(systemName: "x.circle.fill")
                     .padding(6)
             }
-            .padding()
             .zIndex(1)
             .disabled(disableDeleteButton)
             .opacity(disableDeleteButton ? 0 : 1)
@@ -34,7 +36,6 @@ struct CredentialCardView: View {
                         .fill(.background)
                 )
                 .frame(minWidth: 80, maxWidth: 240, minHeight: 60)
-                .padding()
         }
         .onHover { withinBounds in
             disableDeleteButton = !withinBounds
