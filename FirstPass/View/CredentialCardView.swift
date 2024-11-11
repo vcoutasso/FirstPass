@@ -27,6 +27,7 @@ struct CredentialCardView: View {
             .disabled(disableDeleteButton)
             .opacity(disableDeleteButton ? 0 : 1)
             .buttonStyle(.plain)
+            .foregroundStyle(.secondary)
 
             cardContentView
                 .lineLimit(1)
