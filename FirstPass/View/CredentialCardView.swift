@@ -65,17 +65,17 @@ private extension CredentialCardView {
 
             HStack {
                 Text(credential.username)
-                    .font(.subheadline)
                     .bold()
 
                 Spacer()
 
-                if isPasswordHidden {
-                    obscuredPasswordView
-                        .textSelection(.disabled)
-                } else {
-                    Text(credential.password)
-                        .font(.subheadline)
+                Group {
+                    if isPasswordHidden {
+                        Text("********")
+                            .textSelection(.disabled)
+                    } else {
+                        Text(credential.password)
+                    }
                 }
 
                 Button(action: {
@@ -86,13 +86,10 @@ private extension CredentialCardView {
                 }
                 .buttonStyle(BorderlessButtonStyle())
             }
+            .font(.subheadline)
+            .lineLimit(1)
             .textSelection(.enabled)
         }
-    }
-
-    private var obscuredPasswordView: some View {
-        Text("********")
-            .font(.subheadline)
     }
 }
 
