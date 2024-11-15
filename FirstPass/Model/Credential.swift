@@ -2,6 +2,7 @@ import Foundation
 
 // MARK: - Credential
 
+/// Represents a stored credential, the base building block for the app.
 struct Credential: Identifiable, Hashable {
     let id: UUID = .init()
     var name: String

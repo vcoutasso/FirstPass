@@ -2,6 +2,7 @@ import SwiftUI
 
 // MARK: - CredentialGridView
 
+/// A view that displays a grid of credentials, allowing users to view, add, update, and delete credentials.
 struct CredentialGridView: View {
 
     // MARK: Lifecycle
@@ -112,6 +113,6 @@ private extension CredentialGridView {
 
 #Preview("Empty Credentials") {
     let repository = CredentialsRepository(credentials: [])
-    
+
     CredentialGridView(repository: repository)
 }

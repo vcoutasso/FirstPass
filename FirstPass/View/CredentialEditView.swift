@@ -2,6 +2,7 @@ import SwiftUI
 
 // MARK: - CredentialEditView
 
+/// A view that provides a form for creating or editing a `Credential` ob
 struct CredentialEditView: View {
 
     // MARK: Internal

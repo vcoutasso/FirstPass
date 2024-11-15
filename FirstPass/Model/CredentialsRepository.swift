@@ -2,6 +2,7 @@ import Combine
 
 // MARK: - CredentialsRepository
 
+/// A repository for managing a collection of credentials, supporting real-time updates for SwiftUI views.
 @MainActor
 final class CredentialsRepository: ObservableObject {
 

@@ -2,6 +2,7 @@ import Combine
 
 // MARK: - CredentialGridViewModel
 
+/// View model that manages a list of credentials and exposes functionality to filter it
 @MainActor
 final class CredentialGridViewModel: ObservableObject {
 

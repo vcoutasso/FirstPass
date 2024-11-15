@@ -2,6 +2,8 @@ import SwiftUI
 
 // MARK: - CredentialCardView
 
+/// A view representing a card displaying credential information with a delete button.
+/// This view displays a single credential in a card layout with a delete button in the top-right corner.
 struct CredentialCardView: View {
 
     // MARK: Internal

@@ -3,6 +3,7 @@ import LocalAuthentication
 
 // MARK: - FirstPassView
 
+/// A view that manages the main content of the FirstPass app, handling authentication and displaying the credential grid on success.
 struct FirstPassView: View {
 
     // MARK: Lifecycle

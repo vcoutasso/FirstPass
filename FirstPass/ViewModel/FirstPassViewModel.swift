@@ -3,6 +3,8 @@ import Foundation
 import LocalAuthentication
 import SwiftUI
 
+/// View model that manages the app's authentication state, including biometric authentication
+/// and activity/inactivity monitoring for automatic session management.
 @MainActor
 final class FirstPassViewModel: ObservableObject {
 

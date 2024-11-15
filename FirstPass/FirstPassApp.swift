@@ -2,6 +2,7 @@ import SwiftUI
 
 // MARK: - FirstPassApp
 
+/// App entry point
 @main
 struct FirstPassApp: App {
 
