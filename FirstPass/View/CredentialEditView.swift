@@ -58,11 +58,11 @@ private extension CredentialEditView {
 // MARK: SwiftUI previews
 
 #Preview("Create credential") {
-    var credential = Credential.emptyCredential()
+    let credential = Credential.emptyCredential()
     CredentialEditView(credential: credential, onSave: { _ in })
 }
 
 #Preview("Update credential") {
-    var credential = Credential.mock()
+    let credential = Credential.mock()
     CredentialEditView(credential: credential, onSave: { _ in })
 }
