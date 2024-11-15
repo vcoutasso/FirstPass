@@ -1,4 +1,5 @@
 import SwiftUI
+import LocalAuthentication
 
 // MARK: - FirstPassView
 
@@ -13,29 +14,49 @@ struct FirstPassView: View {
     // MARK: Body
 
     var body: some View {
-        CredentialGridView(credentials: .constant(viewModel.filteredCredentials), deleteCredentialCallback: viewModel.removeCredential, updateCredentialCallback: viewModel.updateCredential)
-            .searchable(text: $viewModel.searchQuery, prompt: Text("Credential name"))
-            .toolbar {
-                ToolbarItem(placement: .primaryAction) {
-                    Button {
-                        isPresentingEditView = true
-                    } label: {
-                        Image(systemName: "plus")
+        Group {
+            if !isAuthenticated {
+                LocalAuthenticationView(reason: Text("Access your FirstPass credentials."), context: context) {
+                    if case .success = $0 {
+                        withAnimation {
+                            isAuthenticated = true
+                        }
                     }
                 }
-            }
-            .sheet(isPresented: $isPresentingEditView) {
-                CredentialEditView(credential: .emptyCredential()) { credential in
-                    viewModel.updateCredential(credential)
+                label: {
+                    Text("FirstPass is Locked")
+                        .font(.headline)
+                        .bold()
                 }
+            } else {
+                CredentialGridView(credentials: .constant(viewModel.filteredCredentials), deleteCredentialCallback: viewModel.removeCredential, updateCredentialCallback: viewModel.updateCredential)
+                    .searchable(text: $viewModel.searchQuery, prompt: Text("Credential name"))
+                    .toolbar {
+                        ToolbarItem(placement: .primaryAction) {
+                            Button {
+                                isPresentingEditView = true
+                            } label: {
+                                Image(systemName: "plus")
+                            }
+                        }
+                    }
+                    .sheet(isPresented: $isPresentingEditView) {
+                        CredentialEditView(credential: .emptyCredential()) { credential in
+                            viewModel.updateCredential(credential)
+                        }
+                    }
             }
-            .frame(minWidth: 640, minHeight: 480)
+
+        }
+        .frame(minWidth: 640, minHeight: 480)
     }
 
     // MARK: Private 
 
     @StateObject private var viewModel: FirstPassViewModel
+    @StateObject private var context = LAContext()
     @State private var isPresentingEditView: Bool = false
+    @State private var isAuthenticated: Bool = false
 }
 
 // MARK: - SwiftUI Previews
