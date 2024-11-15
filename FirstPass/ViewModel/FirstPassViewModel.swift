@@ -1,18 +1,24 @@
 import Combine
 import Foundation
+import LocalAuthentication
+import SwiftUI
 
 @MainActor
 final class FirstPassViewModel: ObservableObject {
 
     // MARK: Lifecycle
 
-    init(credentials: Set<Credential> = .init()) {
+    init(credentials: Set<Credential> = .init(), authenticationContext: LAContext = .init()) {
         self.credentials = credentials
+        self.authenticationContext = authenticationContext
     }
 
     // MARK: Internal
 
     @Published var searchQuery: String = ""
+    @Published private(set) var isAuthenticated: Bool = false
+
+     let authenticationContext: LAContext
 
     var filteredCredentials: [Credential] {
         if searchQuery.isEmpty {
@@ -35,6 +41,14 @@ final class FirstPassViewModel: ObservableObject {
     func removeCredential(_ credential: Credential) {
         credentials.remove(credential)
         objectWillChange.send()
+    }
+
+    func authenticationHandler(_ result: (Result<Void, any Error>)) {
+        if case .success = result {
+            withAnimation {
+                isAuthenticated = true
+            }
+        }
     }
 
     // MARK: Private

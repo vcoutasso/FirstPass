@@ -15,15 +15,8 @@ struct FirstPassView: View {
 
     var body: some View {
         Group {
-            if !isAuthenticated {
-                LocalAuthenticationView(reason: Text("Access your FirstPass credentials."), context: context) {
-                    if case .success = $0 {
-                        withAnimation {
-                            isAuthenticated = true
-                        }
-                    }
-                }
-                label: {
+            if !viewModel.isAuthenticated {
+                LocalAuthenticationView(reason: Text("Access your FirstPass credentials."), context: viewModel.authenticationContext, result: viewModel.authenticationHandler) {
                     Text("FirstPass is Locked")
                         .font(.headline)
                         .bold()
@@ -54,9 +47,7 @@ struct FirstPassView: View {
     // MARK: Private 
 
     @StateObject private var viewModel: FirstPassViewModel
-    @StateObject private var context = LAContext()
     @State private var isPresentingEditView: Bool = false
-    @State private var isAuthenticated: Bool = false
 }
 
 // MARK: - SwiftUI Previews
