@@ -29,22 +29,9 @@
 		4C64520E2CDEF8360032114B /* FirstPassUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = FirstPassUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
-/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
-		4CC4B5292CE0FDE1006B1604 /* Exceptions for "FirstPass" folder in "FirstPass" target */ = {
-			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
-			membershipExceptions = (
-				"Preview Content/Models/VolatileCredentialProvider+Preview.swift",
-			);
-			target = 4C6451F22CDEF8330032114B /* FirstPass */;
-		};
-/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
-
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		4C6451F52CDEF8330032114B /* FirstPass */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
-			exceptions = (
-				4CC4B5292CE0FDE1006B1604 /* Exceptions for "FirstPass" folder in "FirstPass" target */,
-			);
 			path = FirstPass;
 			sourceTree = "<group>";
 		};
