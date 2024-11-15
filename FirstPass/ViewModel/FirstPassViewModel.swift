@@ -10,8 +10,9 @@ final class FirstPassViewModel: ObservableObject {
 
     // MARK: Lifecycle
 
-    init(authenticationContext: LAContext = .init()) {
+    init(authenticationContext: LAContext = .init(), inactivityTimeout: TimeInterval = 1 * 60) {
         self.authenticationContext = authenticationContext
+        self.inactivityTimeout = inactivityTimeout
     }
 
     // MARK: Internal
@@ -36,7 +37,7 @@ final class FirstPassViewModel: ObservableObject {
     func inactivityDetected() {
         cancellable?.cancel()
         cancellable = Just(())
-            .delay(for: .init(Self.authenticationDuration), scheduler: RunLoop.main)
+            .delay(for: .init(inactivityTimeout), scheduler: RunLoop.main)
             .receive(on: RunLoop.main)
             .sink { [weak self] _ in
                 withAnimation {
@@ -50,6 +51,5 @@ final class FirstPassViewModel: ObservableObject {
     // MARK: Private
 
     private var cancellable: AnyCancellable?
-
-    private static let authenticationDuration: TimeInterval = 1 * 60
+    private let inactivityTimeout: TimeInterval
 }

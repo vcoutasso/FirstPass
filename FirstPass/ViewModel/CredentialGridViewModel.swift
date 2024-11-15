@@ -8,10 +8,10 @@ final class CredentialGridViewModel: ObservableObject {
 
     // MARK: Lifecycle
 
-    init(repository: CredentialsRepository) {
+    init(repository: any CredentialsStoring) {
         self.repository = repository
 
-        repository.$credentials
+        repository.credentialsPublisher
             .combineLatest($searchQuery)
             .map { credentials, query in
                 (Array(credentials), query)
@@ -40,5 +40,5 @@ final class CredentialGridViewModel: ObservableObject {
     // MARK: Private
 
     private var cancellables: Set<AnyCancellable> = []
-    private let repository: CredentialsRepository
+    private let repository: any CredentialsStoring
 }
