@@ -4,18 +4,22 @@ import SwiftUI
 
 struct CredentialGridView: View {
 
-    // MARK: Internal
+    // MARK: Lifecycle
 
-    @Binding var credentials: [Credential]
-    private(set) var deleteCredentialCallback: (Credential) -> Void
-    private(set) var updateCredentialCallback: (Credential) -> Void
+    init(viewModel: CredentialGridViewModel) {
+        self.viewModel = viewModel
+    }
+
+    init(repository: CredentialsRepository) {
+        self.init(viewModel: .init(repository: repository))
+    }
 
     // MARK: Body
 
     var body: some View {
         VStack(alignment: .leading) {
             Group {
-                if credentials.isEmpty {
+                if viewModel.filteredCredentials.isEmpty {
                     Spacer()
 
                     emptyCredentialsView
@@ -24,17 +28,17 @@ struct CredentialGridView: View {
                 } else {
                     GeometryReader { geometry in
                         LazyVGrid(columns: gridColumns(width: geometry.size.width), alignment: .leading) {
-                            ForEach(credentials.sorted(by: { $0.name.localizedCaseInsensitiveCompare($1.name) == .orderedAscending }), id: \.self) { credential in
+                            ForEach(viewModel.filteredCredentials.sorted(by: { $0.name.localizedCaseInsensitiveCompare($1.name) == .orderedAscending }), id: \.self) { credential in
                                 CredentialCardView(credential: credential, onDelete: {
                                     withAnimation(.spring(bounce: 0.3)) {
-                                        deleteCredentialCallback(credential)
+                                        viewModel.removeCredential(credential)
                                     }
                                 })
                                 .onTapGesture {
                                     isPresentingUpdateView = true
                                 }
                                 .sheet(isPresented: $isPresentingUpdateView) {
-                                    CredentialEditView(credential: credential, onSave: updateCredentialCallback)
+                                    CredentialEditView(credential: credential, onSave: viewModel.updateCredential)
                                 }
                             }
                         }
@@ -45,11 +49,29 @@ struct CredentialGridView: View {
 
             Spacer()
         }
+        .searchable(text: $viewModel.searchQuery, prompt: Text("Credential name"))
+        .toolbar {
+            ToolbarItem(placement: .primaryAction) {
+                Button {
+                    isPresentingNewCredentialView = true
+                } label: {
+                    Image(systemName: "plus")
+                }
+            }
+        }
+        .sheet(isPresented: $isPresentingNewCredentialView) {
+            CredentialEditView(credential: .emptyCredential()) { credential in
+                viewModel.updateCredential(credential)
+            }
+        }
     }
 
     // MARK: Private
 
+    @ObservedObject private var viewModel: CredentialGridViewModel
+
     @State private var isPresentingUpdateView: Bool = false
+    @State private var isPresentingNewCredentialView: Bool = false
 
     private func gridColumns(width: CGFloat) -> [GridItem] {
         let columns = max(3, Int(width) / Int(CredentialCardView.maxWidth))
@@ -77,17 +99,19 @@ private extension CredentialGridView {
 // MARK: - SwiftUI Previews
 
 #Preview("With Credentials") {
-    @Previewable @State var credentials: [Credential] = [
+    let credentials: [Credential] = [
         .init(name: "My Password", urlString: "someurl.com", username: "Username", password: "secret-password"),
         .init(name: "My Other Password", urlString: "somothereurl.com", username: "Username", password: "secret-password")
     ]
 
-    CredentialGridView(credentials: $credentials, deleteCredentialCallback: { _ in credentials.removeFirst() }, updateCredentialCallback: { _ in })
+    let repository = CredentialsRepository(credentials: Set(credentials))
+
+    CredentialGridView(repository: repository)
         .frame(width: 640, height: 480)
 }
 
 #Preview("Empty Credentials") {
-    @Previewable @State var credentials = [Credential]()
+    let repository = CredentialsRepository(credentials: [])
     
-    CredentialGridView(credentials: $credentials, deleteCredentialCallback: { _ in }, updateCredentialCallback: { _ in })
+    CredentialGridView(repository: repository)
 }

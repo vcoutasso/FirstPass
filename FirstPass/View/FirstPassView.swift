@@ -22,22 +22,7 @@ struct FirstPassView: View {
                         .bold()
                 }
             } else {
-                CredentialGridView(credentials: .constant(viewModel.filteredCredentials), deleteCredentialCallback: viewModel.removeCredential, updateCredentialCallback: viewModel.updateCredential)
-                    .searchable(text: $viewModel.searchQuery, prompt: Text("Credential name"))
-                    .toolbar {
-                        ToolbarItem(placement: .primaryAction) {
-                            Button {
-                                isPresentingEditView = true
-                            } label: {
-                                Image(systemName: "plus")
-                            }
-                        }
-                    }
-                    .sheet(isPresented: $isPresentingEditView) {
-                        CredentialEditView(credential: .emptyCredential()) { credential in
-                            viewModel.updateCredential(credential)
-                        }
-                    }
+                CredentialGridView(viewModel: .init(repository: credentialsRepository))
                     .onChange(of: scenePhase) { _, newPhase in
                         if newPhase == .active {
                             viewModel.activityDetected()
@@ -54,6 +39,7 @@ struct FirstPassView: View {
     // MARK: Private 
 
     @AppStorage(AppStorageKey.appAuthenticationEnabled.rawValue) private var appAuthentication: Bool = true
+    @EnvironmentObject private var credentialsRepository: CredentialsRepository
     @Environment(\.scenePhase) private var scenePhase
     @StateObject private var viewModel: FirstPassViewModel
     @State private var isPresentingEditView: Bool = false
@@ -62,13 +48,6 @@ struct FirstPassView: View {
 // MARK: - SwiftUI Previews
 
 #Preview {
-    let credentials: [Credential] = {
-        var array = [Credential]()
-        for _ in 1...10 { array.append(.mock()) }
-        return array
-    }()
-    let vm = FirstPassViewModel(credentials: Set(credentials))
-
-    FirstPassView(viewModel: vm)
+    FirstPassView(viewModel: .init())
         .frame(width: 800, height: 640)
 }

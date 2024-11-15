@@ -11,6 +11,7 @@ struct FirstPassApp: App {
         WindowGroup {
             FirstPassView()
         }
+        .environmentObject(credentialsRepository)
         .windowResizability(.contentSize)
         .defaultSize(width: 640, height: 480)
 
@@ -18,4 +19,8 @@ struct FirstPassApp: App {
             SettingsView()
         }
     }
+
+    // MARK: Private
+
+    private let credentialsRepository = CredentialsRepository()
 }
