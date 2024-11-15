@@ -18,7 +18,7 @@ final class FirstPassViewModel: ObservableObject {
     @Published var searchQuery: String = ""
     @Published private(set) var isAuthenticated: Bool = false
 
-     let authenticationContext: LAContext
+    private(set) var authenticationContext: LAContext
 
     var filteredCredentials: [Credential] {
         if searchQuery.isEmpty {
@@ -51,7 +51,29 @@ final class FirstPassViewModel: ObservableObject {
         }
     }
 
+    func activityDetected() {
+        cancellable?.cancel()
+        cancellable = nil
+    }
+
+    func inactivityDetected() {
+        cancellable?.cancel()
+        cancellable = Just(())
+            .delay(for: .init(Self.authenticationDuration), scheduler: RunLoop.main)
+            .receive(on: RunLoop.main)
+            .sink { [weak self] _ in
+                withAnimation {
+                    // Reset context so the user can re-authenticate
+                    self?.authenticationContext = LAContext()
+                    self?.isAuthenticated = false
+                }
+            }
+    }
+
     // MARK: Private
 
+    private var cancellable: AnyCancellable?
     private var credentials: Set<Credential>
+
+    private static let authenticationDuration: TimeInterval = 1 * 60
 }

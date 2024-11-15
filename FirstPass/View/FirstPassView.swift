@@ -38,6 +38,13 @@ struct FirstPassView: View {
                             viewModel.updateCredential(credential)
                         }
                     }
+                    .onChange(of: scenePhase) { _, newPhase in
+                        if newPhase == .active {
+                            viewModel.activityDetected()
+                        } else {
+                            viewModel.inactivityDetected()
+                        }
+                    }
             }
 
         }
@@ -46,6 +53,7 @@ struct FirstPassView: View {
 
     // MARK: Private 
 
+    @Environment(\.scenePhase) private var scenePhase
     @StateObject private var viewModel: FirstPassViewModel
     @State private var isPresentingEditView: Bool = false
 }
