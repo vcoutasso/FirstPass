@@ -13,5 +13,9 @@ struct FirstPassApp: App {
         }
         .windowResizability(.contentSize)
         .defaultSize(width: 640, height: 480)
+
+        Settings {
+            SettingsView()
+        }
     }
 }

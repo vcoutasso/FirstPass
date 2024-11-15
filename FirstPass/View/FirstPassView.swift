@@ -15,7 +15,7 @@ struct FirstPassView: View {
 
     var body: some View {
         Group {
-            if !viewModel.isAuthenticated {
+            if appAuthentication && !viewModel.isAuthenticated {
                 LocalAuthenticationView(reason: Text("Access your FirstPass credentials."), context: viewModel.authenticationContext, result: viewModel.authenticationHandler) {
                     Text("FirstPass is Locked")
                         .font(.headline)
@@ -53,6 +53,7 @@ struct FirstPassView: View {
 
     // MARK: Private 
 
+    @AppStorage(AppStorageKey.appAuthenticationEnabled.rawValue) private var appAuthentication: Bool = true
     @Environment(\.scenePhase) private var scenePhase
     @StateObject private var viewModel: FirstPassViewModel
     @State private var isPresentingEditView: Bool = false
