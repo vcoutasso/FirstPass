@@ -16,6 +16,12 @@ struct FirstPassApp: App {
         .windowResizability(.contentSize)
         .defaultSize(width: 640, height: 480)
 
+        MenuBarExtra("FirstPass", systemImage: "key.2.on.ring") {
+            MenuBarView()
+                .environmentObject(credentialsRepository)
+        }
+        .menuBarExtraStyle(.window)
+
         Settings {
             SettingsView()
         }
@@ -23,5 +29,5 @@ struct FirstPassApp: App {
 
     // MARK: Private
 
-    private let credentialsRepository = CredentialsRepository()
+    @StateObject private var credentialsRepository = CredentialsRepository()
 }
